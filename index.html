@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shadow DOM headers</title>
+  </head>
+  <body>
+    <div>
+      <h1>Light DOM h1</h1>
+      <p>
+        Minimal demo of headers inside an outside of the shadow DOM, for testing
+        with accessibility tools.
+      </p>
+      <test-element name="world"></test-element>
+    </div>
+
+    <script type="text/javascript">
+      class TestElement extends HTMLElement {
+        constructor() {
+          super();
+          const shadowRoot = this.attachShadow({
+            mode: "open",
+          }); // Attaches a shadow DOM tree to <test-element> and returns a reference
+        }
+
+        connectedCallback() {
+          this.shadowRoot.innerHTML = `<style>
+           div {
+            background: #eee;
+            padding: 12px;
+           }
+          </style>
+          
+          <div>
+            <h1>Shadow DOM h1</h1>
+          </div>`;
+        }
+      }
+      // Register the custom element
+      customElements.define("test-element", TestElement);
+    </script>
+  </body>
+</html>
